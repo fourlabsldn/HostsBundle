@@ -1,0 +1,22 @@
+{
+    "name": "fourlabs/hosts-bundle",
+    "type": "symfony-bundle",
+    "description": "Symfony2 bundle handling geo location, locale, currency and emailers across multiple domains/hosts.",
+    "keywords": ["domain", "TLD", "host", "location", "locale", "currency", "emailer", "swift"],
+    "homepage": "http://fourlabs.co.uk",
+    "license": "MIT",
+    "minimum-stability": "dev",
+    "authors": [
+        {
+            "name": "Four Labs and other contributors",
+            "homepage": "https://github.com/foaly-nr1/FourLabsEsoftBundle/graphs/contributors"
+        }
+    ],
+    "require": {
+        "php": ">=5.5",
+        "symfony/framework-bundle": "~2.4 || ~3.0"
+    },
+    "autoload": {
+        "psr-4": { "FourLabs\\HostsBundle\\": "" }
+    }
+}

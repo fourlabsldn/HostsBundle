@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="hosts.domain_repository" class="FourLabs\HostsBundle\Model\DomainRepository" public="false">
+            <argument>%hosts.domains%</argument>
+            <argument>%hosts.default_domain%</argument>
+        </service>
+        <service id="hosts.geo_matcher" class="FourLabs\HostsBundle\Service\GeoMatcher" public="false">
+            <argument type="service" id="maxmind.geoip" />
+            <argument type="service" id="hosts.domain_repository" />
+        </service>
+        <service id="hosts.user_matcher" class="FourLabs\HostsBundle\Service\UserMatcher" public="false">
+            <argument type="service" id="hosts.domain_repository" />
+        </service>
+        <service id="hosts.listener.country" class="FourLabs\HostsBundle\EventListener\CountryListener">
+            <tag name="kernel.event_listener" event="kernel.request" method="onKernelRequest" />
+            <argument type="service" id="hosts.geo_matcher" />
+            <argument type="service" id="hosts.user_matcher" />
+            <argument type="service" id="security.token_storage" />
+            <argument>%hosts.assert_country%</argument>
+            <argument>%hosts.test_ip%</argument>
+        </service>
+
+        <service id="hosts.abstract_provider" abstract="true">
+            <argument type="service" id="request_stack" />
+            <argument type="service" id="hosts.domain_repository" />
+        </service>
+
+    	<service id="hosts.locale_provider" class="FourLabs\HostsBundle\Service\LocaleProvider" parent="hosts.abstract_provider" />
+        <service id="hosts.listener.locale" class="FourLabs\HostsBundle\EventListener\LocaleListener">
+            <tag name="kernel.event_listener" event="kernel.request" method="onKernelRequest" priority="11" />
+            <argument type="service" id="hosts.locale_provider" />
+        </service>
+
+        <service id="hosts.listener.signup" class="FourLabs\HostsBundle\EventListener\SignupListener">
+            <tag name="kernel.event_listener" event="fos_user.registration.initialize" method="onRegistrationInitialize" />
+            <argument type="service" id="hosts.geo_matcher" />
+            <argument type="service" id="hosts.locale_provider" />
+            <argument type="service" id="request_stack" />
+        </service>
+
+        <service id="hosts.currency_provider" class="FourLabs\HostsBundle\Service\CurrencyProvider" parent="hosts.abstract_provider" />
+
+        <service id="hosts.mailer_provider" class="FourLabs\HostsBundle\Service\MailerProvider" parent="hosts.abstract_provider">
+            <call method="setContainer">
+                <argument type="service" id="service_container" />
+            </call>
+        </service>
+
+        <service id="hosts.mailer_configurator" class="FourLabs\HostsBundle\Service\MailerConfigurator" public="false">
+            <argument type="service" id="hosts.mailer_provider" />
+        </service>
+
+        <service id="hosts.vat_provider" class="FourLabs\HostsBundle\Service\VatProvider">
+            <argument type="service" id="security.token_storage" />
+            <argument type="service" id="hosts.locale_provider" />
+        </service>
+    </services>
+</container>
