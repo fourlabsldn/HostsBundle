@@ -18,17 +18,23 @@ abstract class AbstractProvider
      */
     protected $domainRepository;
 
-    public function __construct(RequestStack $requestStack, DomainRepository $domainRepository)
+    /**
+     * @var boolean
+     */
+    protected $requestActive;
+
+    public function __construct(RequestStack $requestStack, DomainRepository $domainRepository, $requestActive)
     {
         $this->requestStack = $requestStack;
         $this->domainRepository = $domainRepository;
+        $this->requestActive = $requestActive;
     }
 
     protected function getDomainConfig()
     {
         $request = $this->requestStack->getCurrentRequest();
 
-        if(is_null($request)) {
+        if(is_null($request) || !$this->requestActive) {
             return;
         }
 

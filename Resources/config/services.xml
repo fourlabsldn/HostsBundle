@@ -27,6 +27,7 @@
         <service id="hosts.abstract_provider" abstract="true">
             <argument type="service" id="request_stack" />
             <argument type="service" id="hosts.domain_repository" />
+            <argument type="expression">service('service_container').isScopeActive('request')</argument>
         </service>
 
     	<service id="hosts.locale_provider" class="FourLabs\HostsBundle\Service\LocaleProvider" parent="hosts.abstract_provider" />
