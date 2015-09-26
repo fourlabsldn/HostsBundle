@@ -65,7 +65,8 @@ class CountryListener
         $request = $event->getRequest();
 
         // Allow certain crawlers
-        foreach(['Googlebot', 'facebookexternalhit', 'Facebot'] as $agent) {
+        // TODO: Make this config param with sensible default
+        foreach(['Googlebot', 'facebookexternalhit', 'Facebot', 'bingbot', 'msnbot', 'slurp'] as $agent) {
             if(strpos($request->headers->get('User-Agent'), $agent) !== false) {
                 return;
             }
