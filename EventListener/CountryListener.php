@@ -66,7 +66,7 @@ class CountryListener
 
         // Allow certain crawlers
         // TODO: Make this config param with sensible default
-        foreach(['Googlebot', 'facebookexternalhit', 'Facebot', 'bingbot', 'msnbot', 'slurp', 'AhrefsBot'] as $agent) {
+        foreach(['Googlebot', 'facebookexternalhit', 'Facebot', 'bingbot', 'msnbot', 'slurp', 'AhrefsBot', 'Pinterest'] as $agent) {
             if(strpos($request->headers->get('User-Agent'), $agent) !== false) {
                 return;
             }
