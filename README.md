@@ -1,8 +1,7 @@
 # Hosts Bundle
 Symfony2 bundle handling geo location, locale, currency and emailers across multiple domains/hosts.
 
-[![Total Downloads](https://poser.pugx.org/fourlabs/gamp-bundle/downloads)](https://packagist.org/packages/fourlabs/hosts-bundle)
-[![License](https://poser.pugx.org/fourlabs/gamp-bundle/license)](https://packagist.org/packages/fourlabs/hosts-bundle)
+[![License](https://poser.pugx.org/fourlabs/hosts-bundle/license)](https://packagist.org/packages/fourlabs/hosts-bundle)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/7ec3c39f-aeb6-4c7a-9544-cec122e017f5/mini.png)](https://insight.sensiolabs.com/projects/7ec3c39f-aeb6-4c7a-9544-cec122e017f5)
 
 ## Installation
